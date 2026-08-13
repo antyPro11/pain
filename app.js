@@ -192,18 +192,17 @@
       div.innerHTML='<span class="key">'+LETTERS[i]+'</span><span class="txt">'+escapeHtml(opt)+'</span>';
       div.addEventListener("click", function(){
         if(state.answered[idx]) return; // 已判分锁定
-        selectOption(i);
+        confirmAnswer(i);
       });
       optionsEl.appendChild(div);
     });
 
     // 若已答过（错题重做等）恢复状态
     var ans = state.answered[idx];
-    $("confirmBtn").disabled = false;
     $("nextBtn").disabled = true;
     $("analysis").classList.remove("show");
     if(ans){
-      $("confirmBtn").disabled = true;
+      $("nextBtn").disabled = false;
       applyAnswerFeedback(ans.correct, ans.selected);
     }
   }
@@ -215,35 +214,23 @@
     return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
 
-  // ===== 选项选择 =====
+  // ===== 点击选项直接判分 =====
   var currentSelection = null;
-  function selectOption(i){
+  function confirmAnswer(i){
     var idx=state.current;
     if(state.answered[idx]) return;
     currentSelection=i;
-    var opts=optionsEl.children;
-    for(var j=0;j<opts.length;j++){ opts[j].classList.remove("selected"); }
-    opts[i].classList.add("selected");
-  }
-
-  // ===== 确认答案 =====
-  $("confirmBtn").addEventListener("click", function(){
-    var idx=state.current;
-    if(state.answered[idx]) return;
-    if(currentSelection===null){ alert("请先选择一个答案。"); return; }
     var q=state.questions[idx];
     var correct = currentSelection===q.a;
     state.answered[idx]={ correct:correct, selected:currentSelection };
     applyAnswerFeedback(correct, currentSelection);
-    $("confirmBtn").disabled=true;
     $("nextBtn").disabled=false;
-
     // 更新进度
     updateProgress(correct);
     // 错题管理
     manageWrong(q, correct);
     renderSheet();
-  });
+  }
 
   function applyAnswerFeedback(correct, selected){
     var q=state.questions[state.current];
