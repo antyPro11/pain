@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>疼痛专科护士培训·刷题小程序</title>
+<link rel="stylesheet" href="style.css">
+<!-- PWA 配置 -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.jpg">
+<meta name="theme-color" content="#1a4d8f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="疼痛刷题">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">痛</div>
+    <div>
+      <h1>疼痛专科护士培训题库</h1>
+      <div class="sub">2026年疼痛专科护士培训班教材 · 200题</div>
+    </div>
+  </div>
+  <div class="stats" id="globalStats">加载中…</div>
+</header>
+
+<main class="container">
+  <!-- 模式选择 -->
+  <div class="card">
+    <div class="section-title">选择刷题模式</div>
+    <div class="mode-tabs">
+      <button class="mode-btn active" data-mode="sequence">
+        <div class="icon">📚</div><div class="name">顺序刷题</div>
+        <div class="desc">按模块顺序练习</div>
+      </button>
+      <button class="mode-btn" data-mode="random">
+        <div class="icon">🎲</div><div class="name">随机刷题</div>
+        <div class="desc">打乱顺序练习</div>
+      </button>
+      <button class="mode-btn" data-mode="wrong">
+        <div class="icon">📝</div><div class="name">错题重做</div>
+        <div class="desc">只做错题强化</div>
+      </button>
+      <button class="mode-btn" data-mode="exam">
+        <div class="icon">⏱️</div><div class="name">模拟考试</div>
+        <div class="desc">随机抽题限时</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- 模块筛选 -->
+  <div class="card">
+    <div class="section-title">模块筛选</div>
+    <div class="chips" id="moduleChips"></div>
+  </div>
+
+  <!-- 开始面板 -->
+  <div class="card start-card" id="startCard">
+    <div class="big-icon">📖</div>
+    <h2>准备开始刷题</h2>
+    <p id="startDesc">共 200 道题，选择模式和模块后开始练习。</p>
+    <button class="btn btn-primary big-btn" id="startBtn">开始刷题</button>
+  </div>
+
+  <!-- 刷题面板 -->
+  <div class="quiz-area" id="quizArea">
+    <div class="card">
+      <div class="progress-top">
+        <span class="pos" id="qPos"></span>
+        <span id="qScore"></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="q-meta" id="qMeta"></div>
+      <div class="q-text" id="qText"></div>
+
+      <div class="options" id="options"></div>
+
+      <div class="analysis" id="analysis">
+        <span class="result-badge" id="resultBadge">回答正确</span>
+        <div class="a-title">📖 答案解析</div>
+        <div class="a-body" id="analysisBody"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="confirmBtn">确认答案</button>
+        <button class="btn btn-ghost" id="nextBtn" disabled>下一题</button>
+      </div>
+    </div>
+
+    <!-- 答题卡 -->
+    <div class="card answer-sheet">
+      <div class="section-title">答题卡 <span id="sheetInfo" style="font-weight:400;font-size:13px"></span></div>
+      <div class="sheet-grid" id="sheetGrid"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--success)"></span>答对</span>
+        <span><span class="dot" style="background:var(--danger)"></span>答错</span>
+        <span><span class="dot" style="background:var(--primary-bg)"></span>已答</span>
+        <span><span class="dot" style="background:#fff;border:1.5px solid var(--border)"></span>未答</span>
+      </div>
+      <div class="bottom-nav">
+        <button class="btn btn-ghost" id="backBtn">← 返回首页</button>
+        <button class="btn btn-ghost" id="finishBtn">结束本组</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结果面板 -->
+  <div class="quiz-area" id="resultArea">
+    <div class="card result-page">
+      <div class="big-icon">🎉</div>
+      <h2>本次练习完成</h2>
+      <div class="result-score" id="scoreNum">0</div>
+      <div class="result-grade" id="scoreGrade">继续加油</div>
+      <div class="result-detail">
+        <div class="item"><div class="num" id="rTotal">0</div><div class="lbl">总题数</div></div>
+        <div class="item"><div class="num" id="rCorrect">0</div><div class="lbl">答对</div></div>
+        <div class="item"><div class="num" id="rWrong">0</div><div class="lbl">答错</div></div>
+        <div class="item"><div class="num" id="rAccuracy">0%</div><div class="lbl">正确率</div></div>
+      </div>
+      <button class="btn btn-primary big-btn" id="resultRetryBtn">再练一次</button>
+      <button class="btn btn-ghost big-btn" id="resultHomeBtn" style="margin-top:10px">返回首页</button>
+    </div>
+  </div>
+</main>
+
+<script src="q1.js"></script>
+<script src="q2.js"></script>
+<script src="q3.js"></script>
+<script src="q4.js"></script>
+<script src="q5.js"></script>
+<script src="app.js"></script>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js').catch(function(){});
+}
+</script>
+</body>
+</html>
