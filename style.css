@@ -124,7 +124,7 @@ button:focus-visible{outline:3px solid rgba(47,107,179,.4);outline-offset:2px}
 .result-badge.wrong{background:var(--danger);color:#fff}
 
 /* ===== 操作按钮 ===== */
-.actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.actions{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .btn{
   padding:12px 22px;border-radius:10px;font-size:14px;font-weight:600;
   transition:.2s;display:inline-flex;align-items:center;gap:8px;
