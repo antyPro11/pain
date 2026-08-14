@@ -1,5 +1,5 @@
 /* service-worker.js - 离线缓存（stale-while-revalidate 策略）*/
-var CACHE = 'pain-quiz-v3';
+var CACHE = 'pain-quiz-v4';
 var ASSETS = [
   './',
   './index.html',
