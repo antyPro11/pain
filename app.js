@@ -4,9 +4,9 @@
 
   // ===== 题库组织 =====
   var MODULES = [
-    { id:1, name:"通科护理基础", qs: (window.Q1||[]).slice(0,20) },
-    { id:2, name:"疼痛学绪论",   qs: (window.Q1||[]).slice(20,28) },
-    { id:3, name:"疼痛生理病理", qs: (window.Q1||[]).slice(28,43) },
+    { id:1, name:"通科护理基础", qs: (window.Q1||[]).slice(0,50) },
+    { id:2, name:"疼痛学绪论",   qs: (window.Q1||[]).slice(50,70) },
+    { id:3, name:"疼痛生理病理", qs: (window.Q1||[]).slice(70,100) },
     { id:4, name:"疼痛评估",     qs: (window.Q2||[]) },
     { id:5, name:"疼痛治疗",     qs: (window.Q3||[]) },
     { id:6, name:"疼痛护理实践", qs: (window.Q4||[]) },
